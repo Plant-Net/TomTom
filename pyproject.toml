@@ -1,17 +1,23 @@
 [tool.poetry]
-name = "biocypher-project-template"
-version = "0.5.43"
-description = "Template for creating a BioCypher-driven knowledge graph"
+name = "TomTom"
+version = "0.1.0"
+description = "S. lycopersicum knowledge graph based on the BioCypher Template"
 authors = [
-    "Sebastian Lobentanzer <sebastian.lobentanzer@gmail.com>",
-    "Andreas Maier <andreas.maier-1@uni-hamburg.de>",
+    "Maxime Multari <maxime.multari@inrae.fr>"
 ]
 license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-biocypher = "0.9.6"
+biocypher = "0.9.3"
+openpyxl = "^3.1.2"
+requests = "^2.31.0"
+biopython = "^1.84"
+omadb = "2.2.4"
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.0"
 
 [build-system]
 requires = ["poetry-core"]

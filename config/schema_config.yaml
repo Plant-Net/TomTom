@@ -1,21 +1,160 @@
-# add your desired knowledge graph components here
+gene: 
+    represented_as: node
+    preferred_id: gene_symbol
+    properties:
+        name: str
+        description: str
+
+mrna:
+    is_a: Rna product
+    represented_as: node
+    preferred_id: mrna_symbol
+    properties:
+        name: str
+        description: str
 
 protein:
     represented_as: node
-    preferred_id: uniprot
-    input_label: uniprot_protein
+    preferred_id: protein_symbol
+    properties:
+        name: str
+        description: str
 
-disease:
+transcription factor:
+    is_a: gene
     represented_as: node
-    preferred_id: doid
-    input_label: do_disease
+    properties:
+        name: str
+        description: str
+        family: str
+mrna production:
+    is_a: gene to gene product relationship
+    represented_as: edge
+    input_label: transcripted_to
+    source: gene
+    target: mrna
+    properties:
+        chr: str
+        start: int
+        end: int
+        strand: str
 
-protein interaction:
+TF regulation:
+    is_a: transcriptional_regulation
+    represented_as: edge
+    input_label: regulates
+    source: transcription factor
+    target: transcription factor
+    properties:
+        evidence: str
+
+protein production:
+    is_a: gene to gene product relationship
+    represented_as: edge
+    input_label: translated_to
+    source: mrna
+    target: protein
+
+microRNA:
+    represented_as: node
+    preferred_id: microrna_id
+    properties:
+        name: str
+        accession: str
+        sequence: str
+
+precursor:
+    is_a: noncoding Rna product
+    represented_as : node
+    preferred_id: id
+    properties:
+        name: str
+        accession : str
+        sequence : str
+
+microrna inhibition:
+    is_a: pairwise gene to gene interaction
+    represented_as: edge
+    input_label: [represses_tardb, represses_dpmind, represses_pnrd]
+    source: microrna
+    target: mrna
+    properties:
+        score tardb: float
+        total mispair tardb: float
+        seed mispair tardb: float
+        predicted cleavage tardb: bool
+        degradome source dpmind: str
+        category dpmind: str
+        expection pnrd: str
+        method pnrd: str
+
+microrna production:
+    is_a: gene to gene product relationship
+    represented_as: edge
+    input_label: matures_to
+    source: precursor
+    target: microrna
+    properties:
+        start position: str
+        end position: str
+
+protein protein interaction:
     is_a: pairwise molecular interaction
     represented_as: edge
-    input_label: protein_protein_interaction
+    input_label: interacts_with
+    source: protein
+    target: protein
+    properties:
+        score: str
 
-protein to disease association:
-    is_a: association
+gene function:
+    is_a: biological process or activity
+    represented_as: node
+    preferred_id: term_id
+    properties:
+        name: str
+        description: str
+        reference: str
+        evidence: str
+        classEvidence: str
+
+functional association:
     represented_as: edge
-    input_label: protein_disease_association
+    input_label: annotated_with
+    source: gene
+    target: gene function
+
+pathway:
+    represented_as: node
+    preferred_id: pathway id
+    propertie:
+        name: str
+        species: str
+
+gene to pathway association:
+    represented_as: edge
+    input_label: involved_in
+    source : gene
+    target: pathway
+
+Athaliana gene:
+    is_a: gene
+    represented_as: node
+    preferred_id: gene_symbol
+    properties:
+        name: str
+        canonical_id: str
+        species: str
+        start: int
+        end: int
+        strand: int
+
+gene to gene homology association:
+    represented_as: edge
+    input_label: orthologous_to
+    source: gene
+    target: Athaliana gene
+    properties:
+        relation type: str 
+        distance: int
+        score: int
