@@ -6,6 +6,7 @@ Here I developed a knowledge graph (KG) on *S. lycopersicum* species using [BioC
   - [Input Databases 📚](#input-databases-)
   - [Installation ⚙️](#installation-️)
   - [Docker 🐳](#docker-)
+  - [Reference :writing\_hand:](#reference-writing_hand)
 ## Input Databases 📚
 The KG is composed of several input databases as described in the following table : 
 
@@ -54,3 +55,8 @@ To shutdown the docker :
 ```bash
 docker compose down -v
 ```
+
+## Reference :writing_hand: 
+You can find all the details on the graph construction [here](https://doi.org/10.1101/2025.04.09.647963)
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15630284.svg)](https://doi.org/10.5281/zenodo.15630284)
