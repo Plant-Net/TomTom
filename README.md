@@ -1,10 +1,8 @@
 # 🍅 Tomato Knowledge Graph 🍅
 *Solanum lycopersicum* (tomato) is a plant of major agronomic interest and an increasingly studied organism.  
 However, knowledge on the tomato is widely spread across different databases. Bringing together information on this organism in one place could help many biologists to speed up their understanding.  
-Here I developed a knowledge graph (KG) on *S. lycopersicum* species using [BioCypher](https://github.com/biocypher/biocypher). The project is based on the [BioCypher template](https://github.com/biocypher/project-template).
-## Table of Contents
+Here I developed a knowledge graph (KG) on *S. lycopersicum* species using [BioCypher](https://github.com/biocypher/biocypher).
 - [🍅 Tomato Knowledge Graph 🍅](#-tomato-knowledge-graph-)
-  - [Table of Contents](#table-of-contents)
   - [Input Databases 📚](#input-databases-)
   - [Installation ⚙️](#installation-️)
   - [Docker 🐳](#docker-)
@@ -39,6 +37,8 @@ poetry shell
 python scripts/download_databases.py
 python create_knowledge_graph.py
 ```
+If everything runs smoothly, you can run the Docker 🐳
+
 NB: You can exit the poetry shell just by typing ```exit```
 
 ## Docker 🐳
