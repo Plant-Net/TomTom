@@ -49,11 +49,15 @@ class PlanteomeAdapter:
     def __init__(
         self,
         genome_path: str,
+        annotation_path:str,
+        term_path:str,
         node_types: Optional[list] = None,
         node_fields: Optional[list] = None,
         edge_types: Optional[list] = None,
     ):
         self.genome_path = genome_path
+        self.annotation_path = annotation_path
+        self.term_path = term_path
         self._set_types_and_fields(
             node_types,
             node_fields,
@@ -185,8 +189,8 @@ class PlanteomeAdapter:
     
     def _filter_input_planteome(self):
     
-        Annotations=pd.read_csv('download/planteomeGene/select', header=None, sep='\t')
-        Planteome_terms=pd.read_csv('download/planteomeTerms/select', header=None, sep='\t')
+        Annotations=pd.read_csv(self.annotation_path, header=None, sep='\t')
+        Planteome_terms=pd.read_csv(self.term_path, header=None, sep='\t')
         
         #Set 'OLN' column index ont the column with the goog info
         Annotations['OLN'] = Annotations.apply(self._extract_gene_id_planteome, axis=1)

@@ -66,24 +66,24 @@ kegg = FileDownload(
 
 #.. Planteome
 
-userTaxon=('Solanum lycopersicum').split(' ')
-taxon=userTaxon[0]+'%20'+userTaxon[1]
+# userTaxon=('Solanum lycopersicum').split(' ')
+# taxon=userTaxon[0]+'%20'+userTaxon[1]
 
-url='https://browser.planteome.org/solr/select?defType=edismax&qt=standard&indent=on&wt=csv&rows=100000000&start=0&fl=source,bioentity_internal_id,bioentity_label,qualifier,annotation_class,reference,evidence_type,evidence_with,aspect,bioentity_name,synonym,type,taxon,date,assigned_by,annotation_extension_class,bioentity_isoform&facet=true&facet.mincount=1&facet.sort=count&json.nl=arrarr&facet.limit=25&hl=true&hl.simple.pre=%3Cem%20class=%22hilite%22%3E&hl.snippets=1000&csv.encapsulator=&csv.separator=%09&csv.header=false&csv.mv.separator=%7C&fq=document_category:%22annotation%22&fq=taxon_label:%22'
-url=url+taxon+'%22&facet.field=source&facet.field=assigned_by&facet.field=aspect&facet.field=evidence_type_closure&facet.field=qualifier&facet.field=taxon_label&facet.field=type&facet.field=annotation_class_label&facet.field=regulates_closure_label&facet.field=annotation_extension_class_closure_label&q=*:*'
+# url='https://browser.planteome.org/solr/select?defType=edismax&qt=standard&indent=on&wt=csv&rows=100000000&start=0&fl=source,bioentity_internal_id,bioentity_label,qualifier,annotation_class,reference,evidence_type,evidence_with,aspect,bioentity_name,synonym,type,taxon,date,assigned_by,annotation_extension_class,bioentity_isoform&facet=true&facet.mincount=1&facet.sort=count&json.nl=arrarr&facet.limit=25&hl=true&hl.simple.pre=%3Cem%20class=%22hilite%22%3E&hl.snippets=1000&csv.encapsulator=&csv.separator=%09&csv.header=false&csv.mv.separator=%7C&fq=document_category:%22annotation%22&fq=taxon_label:%22'
+# url=url+taxon+'%22&facet.field=source&facet.field=assigned_by&facet.field=aspect&facet.field=evidence_type_closure&facet.field=qualifier&facet.field=taxon_label&facet.field=type&facet.field=annotation_class_label&facet.field=regulates_closure_label&facet.field=annotation_extension_class_closure_label&q=*:*'
 
 
-planteomeGene = FileDownload(
-    name='planteomeGene',
-    url_s=url,
-    lifetime=1000
-)
+# planteomeGene = FileDownload(
+#     name='planteomeGene',
+#     url_s=url,
+#     lifetime=1000
+# )
 
-planteomeTerms = FileDownload(
-    name='planteomeTerms',
-    url_s='https://browser.planteome.org/solr/select?defType=edismax&qt=standard&indent=on&wt=csv&rows=1000000&start=0&fl=annotation_class,annotation_class_label,description&facet=true&facet.mincount=1&facet.sort=count&json.nl=arrarr&facet.limit=25&hl=true&hl.simple.pre=%3Cem%20class=%22hilite%22%3E&hl.snippets=1000&csv.encapsulator=&csv.separator=%09&csv.header=false&csv.mv.separator=%7C&fq=document_category:%22ontology_class%22&fq=is_obsolete:%22false%22&facet.field=source&facet.field=subset&facet.field=regulates_closure_label&facet.field=is_obsolete&q=*:*',
-    lifetime=1000
-)
+# planteomeTerms = FileDownload(
+#     name='planteomeTerms',
+#     url_s='https://browser.planteome.org/solr/select?defType=edismax&qt=standard&indent=on&wt=csv&rows=1000000&start=0&fl=annotation_class,annotation_class_label,description&facet=true&facet.mincount=1&facet.sort=count&json.nl=arrarr&facet.limit=25&hl=true&hl.simple.pre=%3Cem%20class=%22hilite%22%3E&hl.snippets=1000&csv.encapsulator=&csv.separator=%09&csv.header=false&csv.mv.separator=%7C&fq=document_category:%22ontology_class%22&fq=is_obsolete:%22false%22&facet.field=source&facet.field=subset&facet.field=regulates_closure_label&facet.field=is_obsolete&q=*:*',
+#     lifetime=1000
+# )
 
 def check_and_unzip(folder_name, tar_file_name):
     """Unzip the raw databases
@@ -116,8 +116,8 @@ if __name__ == "__main__":
     tar_file_name = "database_downloads.tar.gz"
     check_and_unzip(folder_name, tar_file_name)
     bc.download(genome)
-    bc.download(planteomeGene)
-    bc.download(planteomeTerms)
+    # bc.download(planteomeGene)
+    # bc.download(planteomeTerms)
     bc.download(plantregmap)
     bc.download(planttfdb)
     bc.download(tardb)

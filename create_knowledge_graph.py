@@ -17,6 +17,8 @@ plantregmap= 'download/plantregmap/regulation_merged_Sly.txt'
 dpmind = 'download/dpmind/Solanum_lycopersicum.xlsx'
 tardb = 'download/tardb/sly.zip.unzip'
 pnrd = 'database_downloads/database_downloads/PNRD/PNRD_sly_targets.txt'
+planteome_gene = 'database_downloads/database_downloads/planteomeGene/select'
+planteome_term = 'database_downloads/database_downloads/planteomeTerms/select'
 
 #Building the genome backbone
 genome_adapter = GenomeAdapter(genome_path = genome)
@@ -38,7 +40,7 @@ pnrd_adapter = PnrdAdapter(pnrd, genome_path=genome)
 string_adapter = StringAdapter(genome_path=genome, combined_score=800)
 
 #Adding planteome terms
-planteome_adapter = PlanteomeAdapter(genome_path=genome)
+planteome_adapter = PlanteomeAdapter(genome_path=genome, annotation_path=planteome_gene, term_path=planteome_term)
 
 #Adding KEGG Pathways
 kegg_adapter = KeggAdapter(genome_path=genome)
