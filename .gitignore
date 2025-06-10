@@ -132,3 +132,12 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .idea
+
+#data input file
+data
+adapters/test.py
+download
+database_downloads
+
+ollama/
+scripts/rag.ipynb
