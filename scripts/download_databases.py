@@ -55,14 +55,6 @@ string = FileDownload(
 )
 
 
-kegg = FileDownload(
-    name='kegg',
-    url_s=['https://rest.kegg.jp/link/sly/pathway',
-           'https://rest.kegg.jp/list/pathway/sly',
-           'https://rest.kegg.jp/conv/sly/uniprot'],
-    lifetime=1000
-)
-
 
 #.. Planteome
 
@@ -124,4 +116,3 @@ if __name__ == "__main__":
     bc.download(dpmind)
     bc.download(string)
     bc.download(mirbase)
-    bc.download(kegg)
