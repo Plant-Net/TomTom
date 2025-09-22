@@ -21,7 +21,7 @@ The KG is composed of several input databases as described in the following tabl
 | [PNRD](https://structuralbiology.cau.edu.cn/PNRD/index.php)   |  microRNA-transcript interaction        |
 | [STRING](https://string-db.org/)  |  protein-protein interaction      |
 | [Planteome](https://planteome.org/)  |  term associated to gene       |
-| [KEGG](https://www.genome.jp/kegg/)   |  pathway associated to gene       |
+| [Mercator4](https://www.plabipd.de/mercator_main.html)   |  pathway associated to gene       |
 | [OMA](https://omabrowser.org/oma/home/) | Gene - *A.thaliana* gene  |
 
 ## Installation ⚙️
