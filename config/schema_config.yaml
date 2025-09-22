@@ -126,10 +126,9 @@ functional association:
 
 pathway:
     represented_as: node
-    preferred_id: pathway id
+    preferred_id: id
     propertie:
         name: str
-        species: str
 
 gene to pathway association:
     represented_as: edge
