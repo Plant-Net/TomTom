@@ -114,15 +114,16 @@ gene function:
     properties:
         name: str
         description: str
-        reference: str
-        evidence: str
-        classEvidence: str
 
 functional association:
     represented_as: edge
     input_label: annotated_with
     source: gene
     target: gene function
+    properties:
+        reference: str
+        evidence: str
+        classEvidence: str
 
 pathway:
     represented_as: node
