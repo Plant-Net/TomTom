@@ -168,7 +168,8 @@ class MercatorAdapter:
         
         mercator_filtered=GenomeAdapter(self.genome_path).filter_input_genome(mercator, 'OLN')
         
-        
+        # logger.info("Mercator after filtering: ", mercator_filtered[["OLN", "Pathway"]].drop_duplicates().shape[0])
+
         return mercator_filtered
     
 
@@ -187,6 +188,7 @@ class MercatorAdapter:
         mercator["Pathway"] = mercator["NAME"].str.split(".").str.get(0)
         mercator.rename(columns={"NAME":"Annotation", "IDENTIFIER": "OLN"}, inplace=True)
         mercator = mercator[mercator["Pathway"] != 'not assigned']
+        mercator = mercator[mercator["OLN"].notna()] ## filter out NaN associations
         
         return mercator
         

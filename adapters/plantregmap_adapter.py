@@ -134,12 +134,12 @@ class PlantregmapAdapter:
         plantregmap['Target_OLN']=plantregmap[2].str.split('.').str.get(0)
         plantregmap.rename(columns={4:'Evidence'},inplace=True)
         
-        # print('PlantRegMap interactions:', plantregmap[['Source_OLN','Target_OLN']].drop_duplicates().shape[0])
+        logger.info('PlantRegMap interactions:', plantregmap[['Source_OLN','Target_OLN']].drop_duplicates().shape[0])
         
         plantregmap_filtered=GenomeAdapter(self.genome_path).filter_input_genome(plantregmap, 'Source_OLN')
         
         plantregmap_filtered=GenomeAdapter(self.genome_path).filter_input_genome(plantregmap_filtered, 'Target_OLN')
         
-        # print('PlantRegMap interactions after filtering:', plantregmap_filtered[['Source_OLN','Target_OLN']].drop_duplicates().shape[0])
+        logger.info('PlantRegMap interactions after filtering:', plantregmap_filtered[['Source_OLN','Target_OLN']].drop_duplicates().shape[0])
         
         return plantregmap_filtered

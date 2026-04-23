@@ -380,7 +380,9 @@ class GenomeAdapter:
         set_df=set(df_to_filter[column].unique())
         to_filter_out=set_df.difference(set_genome)
         
-        # print('Genomic entities lost:', len(to_filter_out))
+        print('Genomic entities lost:', len(to_filter_out))
+        print('First 5 genomic entities lost:', list(to_filter_out)[:5])
+        
         
         Filtered_df=df_to_filter[~df_to_filter[column].isin(to_filter_out)]
         

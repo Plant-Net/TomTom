@@ -229,24 +229,24 @@ class OmaAdapter:
     def _prefix_gene(self, string):
         return f"gene:{string}"
     
-    def _filter_input_oma(self):
-        """ Filter input oma gene to match the Genome
+    # def _filter_input_oma(self):
+    #     """ Filter input oma gene to match the Genome
 
-        Returns:
-            oma_filtered (pd.DataFrame): Dataframe with pathway genes association after genome filtering of the genes
-        """
+    #     Returns:
+    #         oma_filtered (pd.DataFrame): Dataframe with pathway genes association after genome filtering of the genes
+    #     """
     
-        oma = self.combine_oma(self.gene_in_pathway_file, self.gene_to_uniprot_file)
+    #     oma = self.combine_oma(self.gene_in_pathway_file, self.gene_to_uniprot_file)
         
-        # oma_genes['OLN']=oma_genes['OLN'].str.split('.').str.get(0)
+    #     # oma_genes['OLN']=oma_genes['OLN'].str.split('.').str.get(0)
         
-        # print('oma interactions:', oma[['OLN','Pathway_ID']].drop_duplicates().shape[0])
+    #     print('oma interactions:', oma[['OLN','Ath_OLN']].drop_duplicates().shape[0])
         
-        oma_filtered=GenomeAdapter(self.genome_path).filter_input_genome(oma, 'OLN')
+    #     oma_filtered=GenomeAdapter(self.genome_path).filter_input_genome(oma, 'OLN')
         
-        # print('oma interactions after filtering:', oma_filtered[['OLN','Pathway_ID']].drop_duplicates().shape[0])
+    #     print('oma interactions after filtering:', oma_filtered[['OLN','Ath_OLN']].drop_duplicates().shape[0])
         
-        return oma_filtered
+    #     return oma_filtered
     
     def _get_oma_information(self):
         
@@ -316,11 +316,11 @@ class OmaAdapter:
     
         oma = self._retrieve_info_from_parsed()
         
-        # print('oma interactions:', oma[['OLN','Pathway_ID']].drop_duplicates().shape[0])
+        logger.info('oma interactions:', oma[['OLN','Ath_OLN']].drop_duplicates().shape[0])
         
         oma_filtered=GenomeAdapter(self.genome_path).filter_input_genome(oma, 'OLN')
         
-        # print('oma interactions after filtering:', oma_filtered[['OLN','Pathway_ID']].drop_duplicates().shape[0])
+        logger.info('oma interactions after filtering:', oma_filtered[['OLN','Ath_OLN']].drop_duplicates().shape[0])
         
         return oma_filtered 
     

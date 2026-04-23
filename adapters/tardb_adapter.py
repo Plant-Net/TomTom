@@ -164,12 +164,12 @@ class TardbAdapter:
         tardb=pd.read_csv(output_file_path, sep='\t')
         tardb['Target_OLN']=tardb['Target_ID'].str.split('.').str.get(0)
         
-        # print('Tardb interactions:', tardb[['Target_OLN','miRNA_ID']].drop_duplicates().shape[0])
+        logger.info('Tardb interactions:', tardb[['Target_OLN','miRNA_ID']].drop_duplicates().shape[0])
         
         tardb_filtered=GenomeAdapter(self.genome_path).filter_input_genome(tardb,'Target_OLN')
         
         tardb_filtered=MirbaseAdapter().filter_input_mirbase(tardb_filtered,'miRNA_ID')
         
-        # print('Tardb filtered interactions:', tardb_filtered[['Target_OLN','miRNA_ID']].drop_duplicates().shape[0])
+        logger.info('Tardb filtered interactions:', tardb_filtered[['Target_OLN','miRNA_ID']].drop_duplicates().shape[0])
         
         return tardb_filtered

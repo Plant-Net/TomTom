@@ -136,7 +136,7 @@ class PnrdAdapter:
         pnrd['target OLN']=pnrd['target name'].str.split('.').str.get(0)
         pnrd['ncRNA sequence']= pnrd['ncRNA sequence'].apply(lambda x: x[::-1]) #Need to invert the sequence to match miRBase info
         
-        # print('PNRD interactions:', pnrd[['target OLN','ncRNA name']].drop_duplicates().shape[0])
+        logger.info('PNRD interactions:', pnrd[['target OLN','ncRNA name']].drop_duplicates().shape[0])
         
         pnrd_filtered=GenomeAdapter(self.genome_path).filter_input_genome(pnrd,'target OLN')
         
@@ -157,6 +157,6 @@ class PnrdAdapter:
         
         pnrd_filtered_final=MirbaseAdapter().filter_input_mirbase(pnrd_filtered, 'ncRNA name')
         
-        # print('PNRD interactions after filtering:', pnrd_filtered_final[['target OLN','ncRNA name']].drop_duplicates().shape[0])
+        logger.info('PNRD interactions after filtering:', pnrd_filtered_final[['target OLN','ncRNA name']].drop_duplicates().shape[0])
         
         return pnrd_filtered_final
