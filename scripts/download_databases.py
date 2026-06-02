@@ -3,7 +3,8 @@ import os
 import tarfile
 from biocypher._logger import logger
 import subprocess
-
+import requests
+from pathlib import Path
 
 bc=BioCypher()
 
@@ -77,6 +78,40 @@ string = FileDownload(
 #     lifetime=1000
 # )
 
+## Biomart
+def run_biomart_query(xml_query, output_file, server_url="https://plants.ensembl.org/biomart/martservice"):
+    """
+    Send an XML query to a BioMart server via POST and save the response to a file.
+    """
+    try:
+        response = requests.post(server_url, data={'query': xml_query})
+
+        if response.ok:
+            output_path = Path(output_file)
+
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+
+            output_path.write_text(response.text)
+
+            print(f"[✔] BioMart query successful — result saved to '{output_file}'")
+        else:
+            print(f"[✖] Query failed with status code: {response.status_code}")
+            print(response.text)
+
+    except requests.exceptions.RequestException as e:
+        print(f"[✖] Error during request: {e}")
+
+biomart_xml_query = """<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Query>
+<Query  virtualSchemaName = "plants_mart" formatter = "TSV" header = "0" uniqueRows = "0" count = "" datasetConfigVersion = "0.6" >
+    <Dataset name = "slycopersicum_eg_gene" interface = "default" >
+        <Attribute name = "ensembl_gene_id" />
+        <Attribute name = "external_synonym" />
+        <Attribute name = "external_gene_name" />
+    </Dataset>
+</Query>
+"""
+
 def check_and_unzip(folder_name, tar_file_name):
     """Unzip the raw databases
 
@@ -116,3 +151,4 @@ if __name__ == "__main__":
     bc.download(dpmind)
     bc.download(string)
     bc.download(mirbase)
+    run_biomart_query(biomart_xml_query, "download/biomart/biomart_slycopersicum_synonyms.tsv")

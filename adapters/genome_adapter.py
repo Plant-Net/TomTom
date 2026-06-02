@@ -26,6 +26,7 @@ class GenomeAdapterGeneField(Enum):
     
     GENE_SYMBOL="symbol"
     DESCRIPTION = "Description"
+    ALIAS = "Alias"
     
 class GenomeAdapterTfField(Enum):
     """
@@ -35,6 +36,7 @@ class GenomeAdapterTfField(Enum):
     GENE_SYMBOL="symbol"
     DESCRIPTION = "Description"
     FAMILY= "Family"
+    ALIAS = "Alias"
     
 class GenomeAdapterMrnaField(Enum):
     """
@@ -43,6 +45,7 @@ class GenomeAdapterMrnaField(Enum):
     
     MRNA_SYMBOL="symbol"
     DESCRIPTION = "Description"
+    ALIAS = "Alias"
     
 class GenomeAdapterProteinField(Enum):
     """
@@ -51,6 +54,7 @@ class GenomeAdapterProteinField(Enum):
     
     PROTEIN_SYMBOL="symbol"
     DESCRIPTION = "Description"
+    ALIAS = "Alias"
         
 class GenomeAdapterEdgeType(Enum):
     """
@@ -111,13 +115,13 @@ class GenomeAdapter:
         self.data = self._create_genome_info()
 
         # extract genes (unique entities of `target` column)
-        self.genes = self.data[["OLN","Description", "Family"]].drop_duplicates()
+        self.genes = self.data[["OLN","Description", "Family", "Alias"]]
 
         # extract mrnas (unique entities of `source` column)
-        self.mrnas = self.data[["OLN","Description"]].drop_duplicates()
+        self.mrnas = self.data[["OLN","Description", "Alias"]]
         
         #extract proteins
-        self.proteins = self.data[["OLN","Description"]].drop_duplicates()
+        self.proteins = self.data[["OLN","Description", "Alias"]]
         
     def get_nodes(self):
         """
@@ -135,9 +139,11 @@ class GenomeAdapter:
         for _, row in self.genes.iterrows():
             node_id = row["OLN"]
             description = row["Description"]
+            alias = row["Alias"]
             properties = {
                 "name": node_id,
-                "description": description
+                "description": description,
+                "alias": alias
             }
             
             if pd.notna(row['Family']):
@@ -158,9 +164,11 @@ class GenomeAdapter:
         for _, row in self.mrnas.iterrows():
             node_id=row["OLN"]
             description=row["Description"]
+            alias=row["Alias"]
             properties = {
                 "name":node_id,
-                "description": description
+                "description": description,
+                "alias": alias
             }
     
             yield BioCypherNode(
@@ -172,9 +180,11 @@ class GenomeAdapter:
         for _, row in self.proteins.iterrows():
             node_id=row["OLN"]
             description=row["Description"]
+            alias=row["Alias"]
             properties = {
                 "name":node_id,
-                "description": description
+                "description": description,
+                "alias": alias
             }
     
             yield BioCypherNode(
@@ -381,7 +391,7 @@ class GenomeAdapter:
         to_filter_out=set_df.difference(set_genome)
         
         print('Genomic entities lost:', len(to_filter_out))
-        print('First 5 genomic entities lost:', list(to_filter_out)[:5])
+        # print('First 5 genomic entities lost:', list(to_filter_out)[:5])
         
         
         Filtered_df=df_to_filter[~df_to_filter[column].isin(to_filter_out)]
@@ -409,16 +419,34 @@ class GenomeAdapter:
         
         return planttfdb_filtered
     
+    def _read_format_synonyms(self):
+        """Read and format the synonyms file to get a dataframe with OLN and associated synonyms
+
+        Returns:
+            synonyms_df (pandas DataFrame): DataFrame containing OLN and associated synonyms
+        """
+        synonyms_df = pd.read_csv('download/biomart/biomart_slycopersicum_synonyms.tsv', sep='\t', header=None)
+        synonyms_df = synonyms_df.rename(columns={0: 'OLN'})
+        synonyms_df = synonyms_df[synonyms_df["OLN"].str.startswith('Solyc')]
+        synonyms_df['OLN'] = synonyms_df['OLN'].str.split('.').str.get(0)
+        
+        long_synonyms_df = (synonyms_df.melt(id_vars='OLN', value_vars=[1,2], value_name='Alias').dropna().drop_duplicates(["OLN","Alias"]))
+        formatted_synonyms_df = (long_synonyms_df.groupby("OLN")["Alias"].agg(list).reset_index())
+        
+        return formatted_synonyms_df
+    
     def _create_genome_info(self):
-        """Create the genome information from previous dataframes by merging the information (genes, positions, description, ...) and planttfdb
+        """Create the genome information from previous dataframes by merging the information (genes, positions, description, ...) with planttfdb and aliases
 
         Returns:
             genome_info_tf (pandas DataFrame): DataFrame of the genome with all the information needed to construct the backbone of the graph.
         """
         genome_info = self._merge_info()
         planttfdb = self._filter_input_planttfdb()
+        Aliases = self._read_format_synonyms()
         
         genome_info_tf = pd.merge(planttfdb, genome_info, on='OLN', how='right')
+        genome_info_tf_alias = pd.merge(genome_info_tf, Aliases, on='OLN', how='left')
         
-        return genome_info_tf
+        return genome_info_tf_alias.drop_duplicates(subset=['OLN','Description','Family'])
         

@@ -4,6 +4,7 @@ gene:
     properties:
         name: str
         description: str
+        alias: list
 
 mrna:
     is_a: Rna product
@@ -12,6 +13,7 @@ mrna:
     properties:
         name: str
         description: str
+        alias: list
 
 protein:
     represented_as: node
@@ -19,6 +21,7 @@ protein:
     properties:
         name: str
         description: str
+        alias: list
 
 transcription factor:
     is_a: gene
@@ -27,6 +30,7 @@ transcription factor:
         name: str
         description: str
         family: str
+        alias: list
 mrna production:
     is_a: gene to gene product relationship
     represented_as: edge
