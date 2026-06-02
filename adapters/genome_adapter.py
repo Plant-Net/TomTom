@@ -102,6 +102,7 @@ class GenomeAdapter:
             edge_types,
             edge_fields,
         )
+        self._genome_parsed = self._parse_gff_genome()
         self._preprocess_data()
     
         
@@ -295,6 +296,7 @@ class GenomeAdapter:
         Returns:
             Genome_list (pandas DataFrame): DataFrame of the genome in an edge list format with gene, mrna, chr, start, end and strand
         """
+        logger.info("Parsing genome GFF file.")
         gene_mrna_pairs = []
 
         with open(self.genome_path, 'r') as f:
@@ -366,7 +368,7 @@ class GenomeAdapter:
         Returns:
             info_genome (pandas DataFrame): Merge dataframe
         """
-        genome = self._parse_gff_genome()
+        genome = self._genome_parsed
         description = self._read_parse_description()
         
         info_genome = pd.merge(genome, description, on='OLN')
@@ -385,13 +387,13 @@ class GenomeAdapter:
         """
         logger.info("Filtering...")
         
-        Genome=self._parse_gff_genome()
+        Genome=self._genome_parsed
         set_genome=set(Genome['OLN'].unique())
         set_df=set(df_to_filter[column].unique())
         to_filter_out=set_df.difference(set_genome)
         
-        print('Genomic entities lost:', len(to_filter_out))
-        # print('First 5 genomic entities lost:', list(to_filter_out)[:5])
+        # logger.info('Genomic entities lost:', len(to_filter_out))
+        # logger.info('First 5 genomic entities lost:', list(to_filter_out)[:5])
         
         
         Filtered_df=df_to_filter[~df_to_filter[column].isin(to_filter_out)]
@@ -408,14 +410,14 @@ class GenomeAdapter:
         planttfdb=pd.read_csv('download/planttfdb/Sly_TF_list.txt.gz.decomp', sep='\t')
         planttfdb['OLN']=planttfdb['TF_ID'].str.split('.').str.get(0)
         
-        # print('Total interaction:', planttfdb.shape[0])
-        # print('Total unique TF:', planttfdb['OLN'].unique().shape[0])
+        # logger.info('Total interaction:', planttfdb.shape[0])
+        # logger.info('Total unique TF:', planttfdb['OLN'].unique().shape[0])
         
         planttfdb_filtered=self.filter_input_genome(planttfdb, 'OLN')
         planttfdb_filtered=planttfdb_filtered[['OLN','Family']]
         
-        # print('Total interaction after filtering:', planttfdb_filtered.shape[0])
-        # print('Total unique TF after filtering:', planttfdb_filtered['OLN'].unique().shape[0])
+        # logger.info('Total interaction after filtering:', planttfdb_filtered.shape[0])
+        # logger.info('Total unique TF after filtering:', planttfdb_filtered['OLN'].unique().shape[0])
         
         return planttfdb_filtered
     

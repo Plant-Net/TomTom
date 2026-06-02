@@ -37,12 +37,12 @@ class StringAdapter:
 
     def __init__(
         self,
-        genome_path: str,
+        genome_adapter: GenomeAdapter,
         combined_score: int,
         edge_types: Optional[list] = None,
         edge_fields: Optional[list] = None,
     ):
-        self.genome_path = genome_path
+        self.genome_adapter = genome_adapter
         self.combined_score = combined_score
         self._set_types_and_fields(
             edge_types,
@@ -145,7 +145,7 @@ class StringAdapter:
         
         # logger.info('String proteins before filtering OLN:', uniprot_mapping['To_OLN'].unique().shape[0])
         
-        uniprot_mapping_filtered=GenomeAdapter(self.genome_path).filter_input_genome(uniprot_mapping, 'To_OLN')
+        uniprot_mapping_filtered=self.genome_adapter.filter_input_genome(uniprot_mapping, 'To_OLN')
         
         # logger.info('String proteins after filtering OLN:', uniprot_mapping_filtered['To_OLN'].unique().shape[0])
         

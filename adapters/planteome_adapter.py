@@ -53,7 +53,7 @@ class PlanteomeAdapter:
 
     def __init__(
         self,
-        genome_path: str,
+        genome_adapter: GenomeAdapter,
         annotation_path:str,
         term_path:str,
         node_types: Optional[list] = None,
@@ -61,7 +61,7 @@ class PlanteomeAdapter:
         edge_types: Optional[list] = None,
         edge_fields: Optional[list] = None,
     ):
-        self.genome_path = genome_path
+        self.genome_adapter = genome_adapter
         self.annotation_path = annotation_path
         self.term_path = term_path
         self._set_types_and_fields(
@@ -239,7 +239,7 @@ class PlanteomeAdapter:
         
         print('planteome associations before filtering:', Associate_sly_genes_term[['OLN','Term']].drop_duplicates().shape[0])
         
-        Association_Planteome_genes_sly_filt=GenomeAdapter(self.genome_path).filter_input_genome(Associate_sly_genes_term, 'OLN')
+        Association_Planteome_genes_sly_filt=self.genome_adapter.filter_input_genome(Associate_sly_genes_term, 'OLN')
         
         Planteome_terms_filt=Planteome_terms[Planteome_terms['Term'].isin(Association_Planteome_genes_sly_filt['Term'].unique())]
         

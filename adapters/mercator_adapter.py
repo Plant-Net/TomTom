@@ -45,12 +45,12 @@ class MercatorAdapter:
 
     def __init__(
         self,
-        genome_path: str,
+        genome_adapter: GenomeAdapter,
         node_types: Optional[list] = None,
         node_fields: Optional[list] = None,
         edge_types: Optional[list] = None,
     ):
-        self.genome_path = genome_path
+        self.genome_adapter = genome_adapter
         self.pathway_file = 'database_downloads/database_downloads/mercator/Mercator_annotation_Sly_4_1.txt'
         self._set_types_and_fields(
             node_types,
@@ -166,7 +166,7 @@ class MercatorAdapter:
         mercator = self.read_pathways()
         
         
-        mercator_filtered=GenomeAdapter(self.genome_path).filter_input_genome(mercator, 'OLN')
+        mercator_filtered=self.genome_adapter.filter_input_genome(mercator, 'OLN')
         
         # logger.info("Mercator after filtering: ", mercator_filtered[["OLN", "Pathway"]].drop_duplicates().shape[0])
 

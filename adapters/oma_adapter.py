@@ -89,13 +89,13 @@ class OmaAdapter:
 
     def __init__(
         self,
-        genome_path: str,
+        genome_adapter: GenomeAdapter,
         node_types: Optional[list] = None,
         node_fields: Optional[list] = None,
         edge_types: Optional[list] = None,
         edge_fields: Optional[list] = None,
     ):
-        self.genome_path = genome_path
+        self.genome_adapter = genome_adapter
         self._set_types_and_fields(
             node_types,
             node_fields,
@@ -318,7 +318,7 @@ class OmaAdapter:
         
         logger.info(f'OMA interactions: {oma[["OLN","Ath_OLN"]].drop_duplicates().shape[0]}')
         
-        oma_filtered=GenomeAdapter(self.genome_path).filter_input_genome(oma, 'OLN')
+        oma_filtered=self.genome_adapter.filter_input_genome(oma, 'OLN')
         
         logger.info(f'OMA interactions after filtering: {oma_filtered[["OLN","Ath_OLN"]].drop_duplicates().shape[0]}')
         

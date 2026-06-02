@@ -35,12 +35,12 @@ class PlantregmapAdapter:
     def __init__(
         self,
         file_path: str,
-        genome_path: str,
+        genome_adapter: GenomeAdapter,
         edge_types: Optional[list] = None,
         edge_fields: Optional[list] = None,
     ):
         self.file_path = file_path
-        self.genome_path = genome_path
+        self.genome_adapter = genome_adapter
         self._set_types_and_fields(
             edge_types,
             edge_fields,
@@ -136,9 +136,9 @@ class PlantregmapAdapter:
         
         logger.info(f'PlantRegMap interactions: {plantregmap[["Source_OLN","Target_OLN"]].drop_duplicates().shape[0]}')
         
-        plantregmap_filtered=GenomeAdapter(self.genome_path).filter_input_genome(plantregmap, 'Source_OLN')
+        plantregmap_filtered=self.genome_adapter.filter_input_genome(plantregmap, 'Source_OLN')
         
-        plantregmap_filtered=GenomeAdapter(self.genome_path).filter_input_genome(plantregmap_filtered, 'Target_OLN')
+        plantregmap_filtered=self.genome_adapter.filter_input_genome(plantregmap_filtered, 'Target_OLN')
         
         logger.info(f'PlantRegMap interactions after filtering: {plantregmap_filtered[["Source_OLN","Target_OLN"]].drop_duplicates().shape[0]}')
         

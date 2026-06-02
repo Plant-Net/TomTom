@@ -27,26 +27,26 @@ genome_adapter = GenomeAdapter(genome_path = genome)
 mirbase_adapter = MirbaseAdapter()
 
 #Adding the TF regulation
-TF_adapter=PlantregmapAdapter(plantregmap,genome_path=genome)
+TF_adapter=PlantregmapAdapter(plantregmap,genome_adapter=genome_adapter)
 
 #Adding MTI
-dpmind_adapter= DpmindAdapter(dpmind, genome_path=genome)
+dpmind_adapter= DpmindAdapter(dpmind, genome_adapter=genome_adapter)
 
-tardb_adapter = TardbAdapter(tardb, genome_path=genome)
+tardb_adapter = TardbAdapter(tardb, genome_adapter=genome_adapter)
 
-pnrd_adapter = PnrdAdapter(pnrd, genome_path=genome)
+pnrd_adapter = PnrdAdapter(pnrd, genome_adapter=genome_adapter)
 
 # Adding String
-string_adapter = StringAdapter(genome_path=genome, combined_score=800)
+string_adapter = StringAdapter(genome_adapter=genome_adapter, combined_score=800)
 
 #Adding planteome terms
-planteome_adapter = PlanteomeAdapter(genome_path=genome, annotation_path=planteome_gene, term_path=planteome_term)
+planteome_adapter = PlanteomeAdapter(genome_adapter=genome_adapter, annotation_path=planteome_gene, term_path=planteome_term)
 
 #Adding Pathways
-mercator_adapter = MercatorAdapter(genome_path=genome)
+mercator_adapter = MercatorAdapter(genome_adapter=genome_adapter)
 
 #Adding OMA
-oma_adapter = OmaAdapter(genome_path=genome)    
+oma_adapter = OmaAdapter(genome_adapter=genome_adapter)    
 
 #Adding the nodes and edges to the knowledge graph
 adapters_for_nodes = [genome_adapter, mirbase_adapter, planteome_adapter, mercator_adapter, oma_adapter]

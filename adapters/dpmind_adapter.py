@@ -37,12 +37,12 @@ class DpmindAdapter:
     def __init__(
         self,
         file_path: str,
-        genome_path: str,
+        genome_adapter: GenomeAdapter,
         edge_types: Optional[list] = None,
         edge_fields: Optional[list] = None,
     ):
         self.file_path = file_path
-        self.genome_path = genome_path
+        self.genome_adapter = genome_adapter
         self._set_types_and_fields(
             edge_types,
             edge_fields,
@@ -137,7 +137,7 @@ class DpmindAdapter:
         
         logger.info(f'DPMIND interactions: {dpmind[["tar_OLN","mir_name"]].drop_duplicates().shape[0]}')
         
-        dpmind_filtered=GenomeAdapter(self.genome_path).filter_input_genome(dpmind,'tar_OLN')
+        dpmind_filtered=self.genome_adapter.filter_input_genome(dpmind,'tar_OLN')
         
         dpmind_filtered=MirbaseAdapter().filter_input_mirbase(dpmind_filtered,'mir_name')
         

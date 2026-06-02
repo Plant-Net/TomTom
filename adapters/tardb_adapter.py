@@ -41,12 +41,12 @@ class TardbAdapter:
     def __init__(
         self,
         file_path: str,
-        genome_path: str,
+        genome_adapter: GenomeAdapter,
         edge_types: Optional[list] = None,
         edge_fields: Optional[list] = None,
     ):
         self.file_path = file_path
-        self.genome_path = genome_path
+        self.genome_adapter = genome_adapter
         self._set_types_and_fields(
             edge_types,
             edge_fields,
@@ -166,7 +166,7 @@ class TardbAdapter:
         
         logger.info(f'Tardb interactions: {tardb[["Target_OLN","miRNA_ID"]].drop_duplicates().shape[0]}')
         
-        tardb_filtered=GenomeAdapter(self.genome_path).filter_input_genome(tardb,'Target_OLN')
+        tardb_filtered=self.genome_adapter.filter_input_genome(tardb,'Target_OLN')
         
         tardb_filtered=MirbaseAdapter().filter_input_mirbase(tardb_filtered,'miRNA_ID')
         

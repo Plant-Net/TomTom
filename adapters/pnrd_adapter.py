@@ -37,12 +37,12 @@ class PnrdAdapter:
     def __init__(
         self,
         file_path: str,
-        genome_path: str,
+        genome_adapter: GenomeAdapter,
         edge_types: Optional[list] = None,
         edge_fields: Optional[list] = None,
     ):
         self.file_path = file_path
-        self.genome_path = genome_path
+        self.genome_adapter = genome_adapter
         self._set_types_and_fields(
             edge_types,
             edge_fields,
@@ -138,7 +138,7 @@ class PnrdAdapter:
         
         logger.info(f'PNRD interactions: {pnrd[["target OLN","ncRNA name"]].drop_duplicates().shape[0]}')
         
-        pnrd_filtered=GenomeAdapter(self.genome_path).filter_input_genome(pnrd,'target OLN')
+        pnrd_filtered=self.genome_adapter.filter_input_genome(pnrd,'target OLN')
         
         ##PNRD had some problem with miRBase ID. Some of the id reflect precursor and not mature microRNA. By applying a merge on the sequence column, we can correct the issue.
         
