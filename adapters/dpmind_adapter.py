@@ -135,12 +135,12 @@ class DpmindAdapter:
         dpmind['tar_OLN']=dpmind['tar_name'].str.split('.').str.get(0)
         dpmind['mir_name']=dpmind['mir_name'].replace('sly-miR171b','sly-miR171b-3p', regex=True)##Previously identify and should be rename
         
-        logger.info('DPMIND interactions:', dpmind[['tar_OLN','mir_name']].drop_duplicates().shape[0])
+        logger.info(f'DPMIND interactions: {dpmind[["tar_OLN","mir_name"]].drop_duplicates().shape[0]}')
         
         dpmind_filtered=GenomeAdapter(self.genome_path).filter_input_genome(dpmind,'tar_OLN')
         
         dpmind_filtered=MirbaseAdapter().filter_input_mirbase(dpmind_filtered,'mir_name')
         
-        logger.info('DPMIND interactions after filtering:', dpmind_filtered[['tar_OLN','mir_name']].drop_duplicates().shape[0])
+        logger.info(f'DPMIND interactions after filtering: {dpmind_filtered[["tar_OLN","mir_name"]].drop_duplicates().shape[0]}')
         
         return dpmind_filtered

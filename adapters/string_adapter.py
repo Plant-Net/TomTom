@@ -205,10 +205,10 @@ class StringAdapter:
             
         string = pd.read_csv(output_file, sep='\t')
         
-        logger.info('String PPI interaction before filtering:', count) 
+        logger.info(f'String PPI interaction before filtering: {count}')
         
         # proteins = pd.concat([string['OLN1'], string['OLN2']])
         
-        logger.info('String proteins after mapping and filtering:', string[['OLN1','OLN2']].drop_duplicates().shape[0])
+        logger.info(f'String proteins after mapping and filtering: {string[["OLN1","OLN2"]].drop_duplicates().shape[0]}')
         
         return string

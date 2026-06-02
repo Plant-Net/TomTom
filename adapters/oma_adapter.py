@@ -316,11 +316,11 @@ class OmaAdapter:
     
         oma = self._retrieve_info_from_parsed()
         
-        logger.info('oma interactions:', oma[['OLN','Ath_OLN']].drop_duplicates().shape[0])
+        logger.info(f'OMA interactions: {oma[["OLN","Ath_OLN"]].drop_duplicates().shape[0]}')
         
         oma_filtered=GenomeAdapter(self.genome_path).filter_input_genome(oma, 'OLN')
         
-        logger.info('oma interactions after filtering:', oma_filtered[['OLN','Ath_OLN']].drop_duplicates().shape[0])
+        logger.info(f'OMA interactions after filtering: {oma_filtered[["OLN","Ath_OLN"]].drop_duplicates().shape[0]}')
         
         return oma_filtered 
     
