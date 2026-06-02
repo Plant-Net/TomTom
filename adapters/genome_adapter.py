@@ -449,6 +449,7 @@ class GenomeAdapter:
         
         genome_info_tf = pd.merge(planttfdb, genome_info, on='OLN', how='right')
         genome_info_tf_alias = pd.merge(genome_info_tf, Aliases, on='OLN', how='left')
+        genome_info_tf_alias['Alias'] = genome_info_tf_alias['Alias'].fillna('NA')
         
         return genome_info_tf_alias.drop_duplicates(subset=['OLN','Description','Family'])
         
