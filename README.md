@@ -57,6 +57,6 @@ docker compose down -v
 ```
 
 ## Reference :writing_hand: 
-You can find all the details on the graph construction [here](https://doi.org/10.1101/2025.04.09.647963)
+You can find all the details on the graph construction in the [publication](https://doi.org/10.1111/nph.71382)
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15630284.svg)](https://doi.org/10.5281/zenodo.15630284)
